@@ -1,0 +1,161 @@
+import discord
+import random
+
+intents = discord.Intents.default()
+
+intents.message_content = True
+
+client = discord.Client(intents=intents)
+
+
+@client.event
+async def on_ready():
+    print(f'Zalogowano jako {client.user}')
+
+
+
+lista = []
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+    if message.content.startswith('/elements of space'):
+        cooldown: 5
+        element = random.randint(1,1000)
+        await message.channel.send(element)
+        if element <= 750:
+            await message.channel.send('You get hydrogen (common, 75%)')
+            lista.append("hydrogen")
+            
+        elif element <= 985:
+            await message.channel.send('You get helium (uncommon, 23.5%)')
+            lista.append("helium")
+        elif element <= 994:
+            await message.channel.send('You get oxygen (very rare, 1%)')
+            lista.append("oxygen")
+        elif element <= 999:
+            await message.channel.send('You get carbon (ultra rare, 0.5%)')
+            lista.append("carbon")
+        elif element == 1000:
+            await message.channel.send('You get neon (legendary, 0.1%)')
+            lista.append("neon")
+        await message.channel.send(lista)
+    if message.content.startswith('/elements of earth'):
+        
+        
+
+        element = random.randint(1,1000)
+        await message.channel.send(element)
+        if element <= 321:
+            await message.channel.send('You get iron  (common, 32.1%)')
+            lista.append("iron")
+        elif element <= 622:
+            await message.channel.send('You get oxygen  (common, 30.1%)')
+            lista.append("oxygen")
+        elif element <= 773:
+            await message.channel.send('You get silicon  (uncommon, 15.1%)')
+            lista.append("silicon")
+        elif element <= 912:
+            await message.channel.send('You get magnesium  (uncommon, 13.9%)')
+            
+        elif element <= 941:
+            await message.channel.send('You get sulfur  (rare, 2.9%)')
+        elif element <= 959:
+            await message.channel.send('You get nickel  (super rare, 1.8%)')
+        elif element <= 974:
+            await message.channel.send('You get calcium  (super rare, 1.5%)')
+        elif element <= 988:
+            await message.channel.send('You get aluminium  (super rare, 1.4%)')
+        elif element <= 993:
+            await message.channel.send('You get sodium  (ultra rare, 0.5%)')
+        elif element <= 995:
+            await message.channel.send('You get pottasium  (epic, 0.2%)')
+        elif element <= 996:
+            await message.channel.send('You get titanium  (legendary, 0.1%)')
+        elif element <= 997:
+            await message.channel.send('You get hydrogen  (legendary, 0.1%)')
+        elif element <= 998:
+            await message.channel.send('You get phosporus  (legendary, 0.1%)')
+        elif element <= 999:
+            await message.channel.send('You get manganese (legendary, 0.1%)')
+        elif element == 1000:
+            await message.channel.send('You get carbon (legendary, 0.1%)')
+
+client.run("")
+
+
+
+
+
+
+
+
+
+import discord
+import random
+from discord.ext import commands
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix='!', intents=intents)
+@bot.event
+async def on_ready():
+    print(f"zalogowano jako {bot.user.name}")
+
+
+
+@bot.command()
+async def password(ctx, a: int):
+    elements = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+    password = ""
+    for i in range(a):
+        password += random.choice(elements)
+    await ctx.send(f"password: {password}")
+
+
+@bot.command()
+async def repeat(ctx, times: int, content: str):
+    for i in range(times):
+        await ctx.send(content)
+@bot.command()
+async def suma_vals(ctx, a: int, b: int):
+    await ctx.send(a + b)
+
+
+
+@bot.command()
+async def odejm(ctx, a: int, b=10):
+    await ctx.send(f'Roznica: {a - b}')
+
+@bot.command()
+async def hej(ctx, count=5):
+    await ctx.send('Hej! ' * count)
+
+
+strony = ["reszka","orzeł","reszka","orzeł","reszka","orzeł","bok"]
+@bot.command()
+async def rzut(ctx):
+    await ctx.send(random.choice(strony))
+
+narzędzia = ["kamień", "papier", "nożyce"]
+@bot.command()
+async def graj(ctx, choice):
+    if choice not in narzędzia:
+        await ctx.send("nie możesz")
+    else:
+        bot = random.choice(strony)
+        if choice == bot:
+            await ctx.send("remis")
+        elif (choice == "kamień" and bot == "papier") or \
+        (choice == "papier" and bot == "nożyce") or \
+        (choice == "nożyce" and bot == "kamień"):
+            await ctx.send(f"bot wygrał dzięki {bot}")
+        else:
+            await ctx.send(f"wygrałeś dzięki {choice}")
+        
+    
+
+bot.run("")
+
